@@ -1,0 +1,19 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: chatx
+      POSTGRES_USER: chatx
+      POSTGRES_PASSWORD: chatx
+    ports:
+      - "5432:5432"
+    volumes:
+      - chatx_pg:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  chatx_pg:

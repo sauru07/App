@@ -1,0 +1,8 @@
+.env
+node_modules/
+server/dist/
+.gradle/
+build/
+.idea/
+*.iml
+local.properties
