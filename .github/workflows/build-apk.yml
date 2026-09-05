@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Setup JDK 17
@@ -25,16 +25,28 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Accept Android SDK licenses
+      - name: Accept SDK licenses
         run: yes | sdkmanager --licenses || true
 
       - name: Make Gradle executable
         working-directory: android
         run: chmod +x gradlew
 
-      - name: Build Debug APK
+      - name: Check Gradle
         working-directory: android
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew --version
+
+      - name: Build APK
+        working-directory: android
+        run: ./gradlew assembleDebug --stacktrace --no-daemon
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: ChatX-debug-apk
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 14        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
