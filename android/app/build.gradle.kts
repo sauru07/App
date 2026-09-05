@@ -7,6 +7,9 @@ plugins {
 android {
     namespace = "com.chatx.app"
     compileSdk = 35
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.chatx.app"
