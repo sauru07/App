@@ -1,0 +1,20 @@
+#!/bin/sh
+set -e
+
+GRADLE_VERSION="8.7"
+GRADLE_DIR="$HOME/.gradle/chatx/$GRADLE_VERSION"
+GRADLE_ZIP="$HOME/.gradle/chatx/gradle-$GRADLE_VERSION-bin.zip"
+URL="https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip"
+
+if [ ! -x "$GRADLE_DIR/bin/gradle" ]; then
+    mkdir -p "$HOME/.gradle/chatx"
+
+    if [ ! -f "$GRADLE_ZIP" ]; then
+        curl -L "$URL" -o "$GRADLE_ZIP"
+    fi
+
+    rm -rf "$HOME/.gradle/chatx/gradle-$GRADLE_VERSION"
+    unzip -q "$GRADLE_ZIP" -d "$HOME/.gradle/chatx"
+fi
+
+exec "$HOME/.gradle/chatx/gradle-$GRADLE_VERSION/bin/gradle" "$@"
